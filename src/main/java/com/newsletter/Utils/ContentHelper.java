@@ -30,15 +30,15 @@ public class ContentHelper {
        return contentResponse;
     }
 
-    public ContentResponse getContentsResponse(List<Content> contents, boolean isIdBasedSearch) {
+    public ContentResponse getContentsResponse(Object contents, boolean isIdBasedSearch) {
         ContentResponse contentResponse = new ContentResponse();
-        if (CollectionUtils.isEmpty(contents) && isIdBasedSearch) {
+        if (Objects.isNull(contents) && isIdBasedSearch) {
             contentResponse.setResultCode(DATA_NOT_FOUND.getCode());
             contentResponse.setResultStatus(DATA_NOT_FOUND.getStatus());
             contentResponse.setResultMessage(DATA_NOT_FOUND.getMessage());
         }
         contentResponse = getSuccessResultCode(contentResponse);
-        contentResponse.setContent(contents);
+        contentResponse.setData(contents);
         return contentResponse;
     }
 

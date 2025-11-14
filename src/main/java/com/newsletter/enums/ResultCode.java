@@ -16,10 +16,10 @@ public enum ResultCode {
     CREATED("S", "002", "Resource created successfully"),
     UPDATED("S", "003", "Resource updated successfully"),
     DELETED("S", "004", "Resource deleted successfully"),
-    
+    DATA_NOT_FOUND("S", "007", "No data found for given ID"),
+
     // Failure codes
-    FAILURE("F", "101", "Operation failed"),
-    DATA_NOT_FOUND("F", "102", "No data found for given ID");
+    FAILURE("F", "101", "Operation failed");
 
     
     private final String status;      // "S" for Success, "F" for Failure

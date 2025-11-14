@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("api/v1/subscribers")
@@ -36,8 +38,8 @@ public class SubscriberController {
     //To fetch all subscribers from the system
     @GetMapping
     public SubscriberResponse getSubscribers() {
-        SubscriberResponse response = new SubscriberResponse();
-        return response;
+        List<Subscriber> subscribers = subscriberService.getAllSubscribers();
+        return subscriberHelper.getAllSubscribersResponse(subscribers);
     }
 
     //To fetch a subscriber from the system

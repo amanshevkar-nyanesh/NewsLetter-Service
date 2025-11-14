@@ -8,6 +8,7 @@ import com.newsletter.model.response.SubscriberResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,10 +47,28 @@ public class SubscriberHelper {
         return getSubscriberBaseResponse(subscriber, subscriberResponse);
     }
 
+    public SubscriberResponse getAllSubscribersResponse(List<Subscriber> subscribers) {
+        SubscriberResponse subscriberResponse = new SubscriberResponse();
+        subscriberResponse = getSuccessResultCode(subscriberResponse);
+        if (CollectionUtils.isEmpty(subscribers)) {
+            subscriberResponse.setData(Collections.emptyList());
+            return subscriberResponse;
+        }
+        subscriberResponse.setData(subscribers);
+        return subscriberResponse;
+    }
+
     public SubscriberResponse getSuccessResultCode(SubscriberResponse subscriberResponse) {
         subscriberResponse.setResultCode(SUCCESS.getCode());
         subscriberResponse.setResultStatus(SUCCESS.getCode());
         subscriberResponse.setResultMessage(SUCCESS.getMessage());
+        return subscriberResponse;
+    }
+
+    public SubscriberResponse getResourceUpdatedResultCode(SubscriberResponse subscriberResponse) {
+        subscriberResponse.setResultCode(UPDATED.getCode());
+        subscriberResponse.setResultStatus(UPDATED.getCode());
+        subscriberResponse.setResultMessage(UPDATED.getMessage());
         return subscriberResponse;
     }
 
@@ -75,7 +94,7 @@ public class SubscriberHelper {
     public SubscriberResponse getSubscriberStatusResponse(Subscriber subscriber, boolean isSuccessfullyProcessed) {
        SubscriberResponse subscriberResponse  = new SubscriberResponse();
        if (isSuccessfullyProcessed && Objects.nonNull(subscriber)) {
-           subscriberResponse =  getSuccessResultCode(subscriberResponse);
+           subscriberResponse =  getResourceUpdatedResultCode(subscriberResponse);
            return getSubscriberBaseResponse(subscriber, subscriberResponse);
        } else  {
            subscriberResponse = getFailureResultCode(subscriberResponse);

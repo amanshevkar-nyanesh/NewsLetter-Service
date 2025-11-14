@@ -44,15 +44,8 @@ public class ContentService {
         return contentRepository.findByTopicId(topicId);
     }
 
-    public List<Content> getContentById(Long id) {
-        Content content = contentRepository.findById(id).orElse(null);
-        if (content != null) {
-            List<Content> contents = new ArrayList<>();
-            contents.add(content);
-            return contents;
-        } else  {
-            return null;
-        }
+    public Content getContentById(Long id) {
+         return contentRepository.findById(id).orElse(null);
     }
 
     @Transactional

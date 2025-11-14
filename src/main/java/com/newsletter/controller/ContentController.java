@@ -47,9 +47,8 @@ public class ContentController {
     //To fetch a content from the system
     @GetMapping("/{id}")
     public ContentResponse getContent(@PathVariable("id") Long id) {
-        List<Content> contents = contentService.getContentById(id);
-        log.info("Content Found :{}", contents.size());
-        return contentHelper.getContentsResponse(contents, true);
+        Content content = contentService.getContentById(id);
+        return contentHelper.getContentsResponse(content, true);
     }
 
     //To delete a content from the system
