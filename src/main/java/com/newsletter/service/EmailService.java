@@ -20,6 +20,9 @@ public class EmailService {
     private JavaMailSender mailSender;
 
     @Value("${spring.mail.username:}")
+    private String smtpUsername;
+
+    @Value("${app.email.from-address:}")
     private String fromEmail;
 
     @Value("${app.email.from-name:Newsletter Service}")
@@ -27,7 +30,7 @@ public class EmailService {
 
     @PostConstruct
     public void init() {
-        if (fromEmail == null || fromEmail.trim().isEmpty()) {
+        if (smtpUsername == null || smtpUsername.trim().isEmpty()) {
             log.error("==========================================");
             log.error("EMAIL CONFIGURATION ERROR!");
             log.error("MAIL_USERNAME is not set or is empty!");
@@ -35,13 +38,21 @@ public class EmailService {
             log.error("or configure it in application.properties");
             log.error("==========================================");
         } else {
-            // Clean up the email - extract only the email part if it contains extra text
-            String cleanedEmail = cleanEmailAddress(fromEmail);
-            if (!cleanedEmail.equals(fromEmail)) {
-                log.warn("Email address was cleaned from '{}' to '{}'", fromEmail, cleanedEmail);
-                fromEmail = cleanedEmail;
+            // If fromEmail is not set, try to use smtpUsername (for Gmail)
+            // For SendGrid (apikey), fromEmail must be set separately
+            if (fromEmail == null || fromEmail.trim().isEmpty()) {
+                // If smtpUsername looks like an email, use it as fromEmail
+                if (smtpUsername.contains("@")) {
+                    fromEmail = cleanEmailAddress(smtpUsername);
+                    log.info("Using SMTP username as from email: {}", fromEmail);
+                } else {
+                    log.warn("SMTP username '{}' is not an email. Please set EMAIL_FROM_ADDRESS environment variable with a verified sender email.", smtpUsername);
+                }
+            } else {
+                fromEmail = cleanEmailAddress(fromEmail);
+                log.info("Using configured from email: {}", fromEmail);
             }
-            log.info("Email service initialized with from address: {}", fromEmail);
+            log.info("Email service initialized - SMTP username: {}, From email: {}", smtpUsername, fromEmail);
         }
     }
 
@@ -95,17 +106,17 @@ public class EmailService {
      * @return true if email was sent successfully, false otherwise
      */
     public boolean sendNewsletter(Subscriber subscriber, Content content) {
-        // Validate and clean email configuration
+        // Validate from email address (not SMTP username)
         String trimmedEmail = (fromEmail != null) ? cleanEmailAddress(fromEmail) : "";
         if (trimmedEmail.isEmpty()) {
-            log.error("Email configuration is missing! MAIL_USERNAME is empty. Cannot send email to {}",
+            log.error("From email address is missing! Set EMAIL_FROM_ADDRESS environment variable. Cannot send email to {}",
                     subscriber.getEmail());
             return false;
         }
 
-        // Validate email format
+        // Validate email format (must be a valid email for the "from" address)
         if (!trimmedEmail.contains("@")) {
-            log.error("Invalid email format for MAIL_USERNAME: '{}'. Must be a valid email address.", trimmedEmail);
+            log.error("Invalid email format for EMAIL_FROM_ADDRESS: '{}'. Must be a valid email address.", trimmedEmail);
             return false;
         }
 

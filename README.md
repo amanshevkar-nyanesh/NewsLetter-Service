@@ -8,7 +8,7 @@ A simple newsletter service built with Spring Boot. We can manage subscribers, c
 - Create topics for organizing newsletters
 - Schedule content with a specific send time
 - Automatically sends emails to all subscribers of a topic when the scheduled time arrives
-- Uses any SMTP service for sending emails (I'm using Gmail for my usecase)
+- Uses SendGrid SMTP service for sending emails (designed for cloud deployments)
 
 ## Tech Stack
 
@@ -130,11 +130,18 @@ I deployed this on Render because they have a free tier. Here's how:
 4. Link the database to your web service (Render sets DATABASE_URL automatically)
 
 5. Add environment variables in Render dashboard:
-   - MAIL_HOST=smtp.gmail.com
+   - MAIL_HOST=smtp.sendgrid.net
    - MAIL_PORT=587
-   - MAIL_USERNAME=your-email@gmail.com
-   - MAIL_PASSWORD=your-app-password
+   - MAIL_USERNAME=apikey
+   - MAIL_PASSWORD=your-sendgrid-api-key
+   - EMAIL_FROM_ADDRESS=your-verified-email@example.com
    - EMAIL_FROM_NAME=Newsletter Service
+
+   **SendGrid Setup:**
+   - Sign up at https://sendgrid.com (free tier: 100 emails/day)
+   - Create API key in Settings → API Keys
+   - Verify a sender email in Settings → Sender Authentication
+   - Use the verified email as EMAIL_FROM_ADDRESS
 
 6. Deploy and wait for it to build
 
@@ -143,10 +150,12 @@ I deployed this on Render because they have a free tier. Here's how:
 
 | Variable | What it does | Required |
 |----------|--------------|----------|
-| `MAIL_HOST` | SMTP server (e.g., smtp.gmail.com) | Yes |
-| `MAIL_PORT` | SMTP port (usually 587) | Yes |
-| `MAIL_USERNAME` | Your email address | Yes |
-| `MAIL_PASSWORD` | Your email password/app password | Yes |
+| `MAIL_HOST` | SMTP server (smtp.sendgrid.net) | Yes |
+| `MAIL_PORT` | SMTP port (587) | Yes |
+| `MAIL_USERNAME` | SMTP username (use "apikey" for SendGrid) | Yes |
+| `MAIL_PASSWORD` | SMTP password (your SendGrid API key) | Yes |
+| `EMAIL_FROM_ADDRESS` | Sender email address (must be verified in SendGrid) | Yes |
+| `EMAIL_FROM_NAME` | Sender name shown in emails | No |
 
 ## Database Schema
 
@@ -156,10 +165,19 @@ I deployed this on Render because they have a free tier. Here's how:
 
 ## Common Issues
 
-**Emails not sending?**
-- Check that MAIL_USERNAME and MAIL_PASSWORD are set correctly
-- For Gmail, make sure you're using an App Password, not your regular password
-- Check the application logs for errors
+**Emails not sending? (Connection timeout errors)**
+- **Render Free Tier Issue**: Render's free tier often blocks outbound SMTP connections on port 587
+- **Solution 1**: Use SendGrid - designed for cloud deployments
+  - Sign up at https://sendgrid.com (free tier: 100 emails/day)
+  - Create API key in Settings → API Keys
+  - Verify a sender email in Settings → Sender Authentication
+  - Set environment variables: `MAIL_HOST=smtp.sendgrid.net`, `MAIL_USERNAME=apikey`, `MAIL_PASSWORD=your-api-key`, `EMAIL_FROM_ADDRESS=your-verified-email@example.com`
+- **Solution 2**: If SendGrid doesn't work, try Mailgun (free tier: 5,000 emails/month)
+  - Sign up at https://mailgun.com
+  - Get SMTP credentials from dashboard and verify sender email
+  - Set: `MAIL_HOST=smtp.mailgun.org`, `MAIL_USERNAME=your-username`, `MAIL_PASSWORD=your-password`, `EMAIL_FROM_ADDRESS=your-verified-email@example.com`
+- **Solution 3**: Upgrade Render to a paid plan that allows outbound SMTP
+- Check the application logs for specific error messages
 
 **Scheduled emails not going out?**
 - Make sure the scheduledTime is in the past or current time (the scheduler checks every minute)
