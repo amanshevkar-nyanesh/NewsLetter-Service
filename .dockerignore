@@ -1,0 +1,37 @@
+# Git
+.git
+.gitignore
+
+# IDE
+.idea
+.vscode
+*.iml
+*.swp
+*.swo
+
+# Build artifacts (will be built in Docker)
+target/
+*.jar
+*.war
+
+# Documentation
+*.md
+README.md
+API_TEST_COMMANDS.md
+
+# Test files
+test-all-apis.sh
+Newsletter_Service.postman_collection.json
+
+# Environment files
+.env
+.env.local
+*.properties.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
