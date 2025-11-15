@@ -26,10 +26,10 @@ public class SubscriberController {
     @PostMapping
     public SubscriberResponse createSubscriber(@RequestBody SubscriberRequest request) {
         try {
-            Subscriber  subscriber = subscriberService.createSubscriber(request);
+            Subscriber subscriber = subscriberService.createSubscriber(request);
             log.info("Subscriber created: {}", subscriber);
             return subscriberHelper.createSubscriberResponse(subscriber, true);
-        }  catch (Exception e) {
+        } catch (Exception e) {
             log.error("Subscriber creation failed: {}", e.getMessage());
             return subscriberHelper.createSubscriberResponse(null, false);
         }

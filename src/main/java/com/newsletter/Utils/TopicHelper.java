@@ -1,8 +1,6 @@
 package com.newsletter.Utils;
 
-import com.newsletter.model.dao.Subscriber;
 import com.newsletter.model.dao.Topic;
-import com.newsletter.model.response.SubscriberResponse;
 import com.newsletter.model.response.TopicResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -12,14 +10,11 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.newsletter.enums.ResultCode.*;
-import static com.newsletter.enums.ResultCode.DELETED;
-import static com.newsletter.enums.ResultCode.FAILURE;
-import static com.newsletter.enums.ResultCode.SUCCESS;
 
 @Component
 public class TopicHelper {
 
-    public TopicResponse createTopicResponse(Topic topic, boolean isSuccessfullyProcessed){
+    public TopicResponse createTopicResponse(Topic topic, boolean isSuccessfullyProcessed) {
         TopicResponse topicResponse = new TopicResponse();
         if (isSuccessfullyProcessed && Objects.nonNull(topic)) {
             topicResponse.setResultCode(CREATED.getCode());
@@ -76,7 +71,7 @@ public class TopicHelper {
     }
 
     public TopicResponse getDeleteTopicResponse(boolean isSuccessfullyProcessed) {
-        TopicResponse topicResponse  = new TopicResponse();
+        TopicResponse topicResponse = new TopicResponse();
         if (isSuccessfullyProcessed) {
             topicResponse.setResultCode(DELETED.getCode());
             topicResponse.setResultStatus(DELETED.getCode());

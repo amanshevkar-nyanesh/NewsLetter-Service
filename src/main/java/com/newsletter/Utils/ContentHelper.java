@@ -1,14 +1,9 @@
 package com.newsletter.Utils;
 
-import com.newsletter.enums.ResultCode;
 import com.newsletter.model.dao.Content;
 import com.newsletter.model.response.ContentResponse;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 import static com.newsletter.enums.ResultCode.*;
@@ -27,7 +22,7 @@ public class ContentHelper {
         } else {
             contentResponse = getFailureResultCode(contentResponse);
         }
-       return contentResponse;
+        return contentResponse;
     }
 
     public ContentResponse getContentsResponse(Object contents, boolean isIdBasedSearch) {

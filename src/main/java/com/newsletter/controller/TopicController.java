@@ -5,7 +5,6 @@ import com.newsletter.model.dao.Topic;
 import com.newsletter.model.request.TopicRequest;
 import com.newsletter.model.response.TopicResponse;
 import com.newsletter.service.TopicService;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +31,7 @@ public class TopicController {
             log.info("Topic Created Successfully for topic :{} with id :{}", topic.getName(), topic.getId());
             return topicHelper.createTopicResponse(topic, true);
         } catch (Exception e) {
-            log.error("Topic Creation Failed:{} ",e.getMessage());
+            log.error("Topic Creation Failed:{} ", e.getMessage());
             return topicHelper.createTopicResponse(null, false);
         }
     }
@@ -60,7 +59,7 @@ public class TopicController {
             topicService.deleteTopic(id);
             log.info("Topic Deleted Successfully for topic id :{}", id);
             return topicHelper.getDeleteTopicResponse(true);
-        }  catch (Exception e) {
+        } catch (Exception e) {
             log.error("Topic Deletion Failed :{}", e.getMessage());
             return topicHelper.getDeleteTopicResponse(false);
         }

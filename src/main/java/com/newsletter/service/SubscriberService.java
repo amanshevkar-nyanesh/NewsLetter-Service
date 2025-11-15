@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -50,14 +49,15 @@ public class SubscriberService {
                 .orElseThrow(() -> new IllegalArgumentException("Topic not found with id: " + topicId));
 
         if (!subscriber.getSubscribedTopics().contains(topic)) {
+            // Only modify the owning side (Subscriber) - JPA will handle the inverse side
             subscriber.getSubscribedTopics().add(topic);
-            topic.getSubscribers().add(subscriber);
             subscriberRepository.save(subscriber);
-            topicRepository.save(topic);
             log.info("Subscriber {} subscribed to topic {}", subscriber.getEmail(), topic.getName());
         }
 
-        return subscriberRepository.findById(subscriberId).orElse(subscriber);
+        // Return a fresh fetch to avoid lazy loading issues
+        return subscriberRepository.findById(subscriberId)
+                .orElseThrow(() -> new IllegalArgumentException("Subscriber not found with id: " + subscriberId));
     }
 
     @Transactional
@@ -69,14 +69,15 @@ public class SubscriberService {
                 .orElseThrow(() -> new IllegalArgumentException("Topic not found with id: " + topicId));
 
         if (subscriber.getSubscribedTopics().contains(topic)) {
+            // Only modify the owning side (Subscriber) - JPA will handle the inverse side
             subscriber.getSubscribedTopics().remove(topic);
-            topic.getSubscribers().remove(subscriber);
             subscriberRepository.save(subscriber);
-            topicRepository.save(topic);
             log.info("Subscriber {} unsubscribed from topic {}", subscriber.getEmail(), topic.getName());
         }
 
-        return subscriberRepository.findById(subscriberId).orElse(subscriber);
+        // Return a fresh fetch to avoid lazy loading issues
+        return subscriberRepository.findById(subscriberId)
+                .orElseThrow(() -> new IllegalArgumentException("Subscriber not found with id: " + subscriberId));
     }
 
     @Transactional

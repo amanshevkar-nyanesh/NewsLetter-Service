@@ -4,7 +4,6 @@ import com.newsletter.Utils.ContentHelper;
 import com.newsletter.model.dao.Content;
 import com.newsletter.model.request.ContentRequest;
 import com.newsletter.model.response.ContentResponse;
-import com.newsletter.repository.ContentRepository;
 import com.newsletter.service.ContentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +57,7 @@ public class ContentController {
             contentService.deleteContent(id);
             log.info("Deleted content with id :{}", id);
             return contentHelper.getDeleteContentResponse(true);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Delete content failed: {}", e.getMessage());
             return contentHelper.getDeleteContentResponse(false);
         }
@@ -69,6 +68,6 @@ public class ContentController {
     public ContentResponse getContentByTopicId(@PathVariable("topicId") Long topicId) {
         List<Content> contents = contentService.getContentsByTopic(topicId);
         log.info("Found :{} contents based on topicID :{}", contents.size(), topicId);
-        return contentHelper.getContentsResponse(contents, true );
+        return contentHelper.getContentsResponse(contents, true);
     }
 }

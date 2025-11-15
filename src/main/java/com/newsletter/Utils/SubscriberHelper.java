@@ -1,9 +1,6 @@
 package com.newsletter.Utils;
 
-import com.newsletter.model.dao.Content;
 import com.newsletter.model.dao.Subscriber;
-import com.newsletter.model.request.SubscriberRequest;
-import com.newsletter.model.response.ContentResponse;
 import com.newsletter.model.response.SubscriberResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -13,14 +10,11 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.newsletter.enums.ResultCode.*;
-import static com.newsletter.enums.ResultCode.DELETED;
-import static com.newsletter.enums.ResultCode.FAILURE;
-import static com.newsletter.enums.ResultCode.SUCCESS;
 
 @Component
 public class SubscriberHelper {
 
-    public SubscriberResponse createSubscriberResponse(Subscriber subscriber, boolean isSuccessfullyProcessed){
+    public SubscriberResponse createSubscriberResponse(Subscriber subscriber, boolean isSuccessfullyProcessed) {
         SubscriberResponse subscriberResponse = new SubscriberResponse();
         if (isSuccessfullyProcessed && Objects.nonNull(subscriber)) {
             subscriberResponse.setResultCode(CREATED.getCode());
@@ -80,7 +74,7 @@ public class SubscriberHelper {
     }
 
     public SubscriberResponse getDeactiveSubscriberResponse(boolean isSuccessfullyProcessed) {
-        SubscriberResponse subscriberResponse  = new SubscriberResponse();
+        SubscriberResponse subscriberResponse = new SubscriberResponse();
         if (isSuccessfullyProcessed) {
             subscriberResponse.setResultCode(DELETED.getCode());
             subscriberResponse.setResultStatus(DELETED.getCode());
@@ -92,14 +86,14 @@ public class SubscriberHelper {
     }
 
     public SubscriberResponse getSubscriberStatusResponse(Subscriber subscriber, boolean isSuccessfullyProcessed) {
-       SubscriberResponse subscriberResponse  = new SubscriberResponse();
-       if (isSuccessfullyProcessed && Objects.nonNull(subscriber)) {
-           subscriberResponse =  getResourceUpdatedResultCode(subscriberResponse);
-           return getSubscriberBaseResponse(subscriber, subscriberResponse);
-       } else  {
-           subscriberResponse = getFailureResultCode(subscriberResponse);
-       }
-       return subscriberResponse;
+        SubscriberResponse subscriberResponse = new SubscriberResponse();
+        if (isSuccessfullyProcessed && Objects.nonNull(subscriber)) {
+            subscriberResponse = getResourceUpdatedResultCode(subscriberResponse);
+            return getSubscriberBaseResponse(subscriber, subscriberResponse);
+        } else {
+            subscriberResponse = getFailureResultCode(subscriberResponse);
+        }
+        return subscriberResponse;
     }
 
     public SubscriberResponse getSubscriberBaseResponse(Subscriber subscriber, SubscriberResponse subscriberResponse) {

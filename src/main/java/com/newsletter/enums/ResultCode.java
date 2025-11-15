@@ -22,34 +22,9 @@ public enum ResultCode {
     FAILURE("F", "101", "Operation failed");
 
     
-    private final String status;      // "S" for Success, "F" for Failure
-    private final String code;        // Result code (e.g., "001", "101")
-    private final String message;     // Human-readable message
-    
-    /**
-     * Find ResultCode by code value
-     */
-    public static ResultCode findByCode(String code) {
-        for (ResultCode resultCode : values()) {
-            if (resultCode.getCode().equals(code)) {
-                return resultCode;
-            }
-        }
-        return null;
-    }
-    
-    /**
-     * Check if the result code represents success
-     */
-    public boolean isSuccess() {
-        return "S".equals(this.status);
-    }
-    
-    /**
-     * Check if the result code represents failure
-     */
-    public boolean isFailure() {
-        return "F".equals(this.status);
-    }
+    private final String status;
+    private final String code;
+    private final String message;
+
 }
 
