@@ -8,6 +8,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
+import java.net.URI;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @Configuration
@@ -16,25 +19,55 @@ public class DatabaseConfig {
     /**
      * Converts Render's postgresql:// URL format to jdbc:postgresql:// format
      * Render provides: postgresql://user:password@host:port/dbname
-     * Spring Boot needs: jdbc:postgresql://user:password@host:port/dbname
+     * Spring Boot needs: jdbc:postgresql://host:port/dbname with separate username/password
      */
     @Bean
     @Primary
     public DataSource dataSource(@Value("${DATABASE_URL:}") String databaseUrl) {
         String jdbcUrl;
         String driverClassName = null;
+        String username = null;
+        String password = null;
         
         if (databaseUrl != null && !databaseUrl.isEmpty()) {
-            // Convert postgresql:// to jdbc:postgresql://
-            if (databaseUrl.startsWith("postgresql://")) {
-                jdbcUrl = "jdbc:" + databaseUrl;
-                driverClassName = "org.postgresql.Driver";
-                log.info("Converted DATABASE_URL from postgresql:// to jdbc:postgresql:// format");
-            } else if (databaseUrl.startsWith("jdbc:postgresql://")) {
-                // Already in correct format
-                jdbcUrl = databaseUrl;
-                driverClassName = "org.postgresql.Driver";
-                log.info("DATABASE_URL already in jdbc:postgresql:// format");
+            // Parse PostgreSQL URL format: postgresql://user:password@host:port/dbname
+            if (databaseUrl.startsWith("postgresql://") || databaseUrl.startsWith("jdbc:postgresql://")) {
+                try {
+                    // Remove jdbc: prefix if present for parsing
+                    String urlToParse = databaseUrl.startsWith("jdbc:") 
+                        ? databaseUrl.substring(5) 
+                        : databaseUrl;
+                    
+                    // Parse the URI
+                    URI uri = new URI(urlToParse);
+                    
+                    // Extract components
+                    String host = uri.getHost();
+                    int port = uri.getPort() == -1 ? 5432 : uri.getPort();
+                    String path = uri.getPath();
+                    String dbName = path.startsWith("/") ? path.substring(1) : path;
+                    
+                    // Extract user info (user:password)
+                    String userInfo = uri.getUserInfo();
+                    if (userInfo != null && userInfo.contains(":")) {
+                        String[] parts = userInfo.split(":", 2);
+                        username = URLDecoder.decode(parts[0], StandardCharsets.UTF_8);
+                        password = URLDecoder.decode(parts[1], StandardCharsets.UTF_8);
+                    } else if (userInfo != null) {
+                        username = URLDecoder.decode(userInfo, StandardCharsets.UTF_8);
+                    }
+                    
+                    // Build JDBC URL without credentials (safer)
+                    jdbcUrl = String.format("jdbc:postgresql://%s:%d/%s", host, port, dbName);
+                    driverClassName = "org.postgresql.Driver";
+                    
+                    log.info("Parsed PostgreSQL DATABASE_URL - host: {}, port: {}, database: {}", host, port, dbName);
+                } catch (Exception e) {
+                    log.error("Failed to parse DATABASE_URL: {}", e.getMessage());
+                    // Fallback to simple conversion
+                    jdbcUrl = databaseUrl.startsWith("jdbc:") ? databaseUrl : "jdbc:" + databaseUrl;
+                    driverClassName = "org.postgresql.Driver";
+                }
             } else if (databaseUrl.startsWith("jdbc:h2:")) {
                 // H2 database
                 jdbcUrl = databaseUrl;
@@ -58,6 +91,14 @@ public class DatabaseConfig {
         
         if (driverClassName != null) {
             builder.driverClassName(driverClassName);
+        }
+        
+        // Set username and password separately if parsed from URL
+        if (username != null) {
+            builder.username(username);
+        }
+        if (password != null) {
+            builder.password(password);
         }
         
         return builder.build();
