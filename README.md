@@ -242,7 +242,8 @@ src/main/java/com/newsletter/
 
 - The scheduler runs every 60 seconds, so there might be up to a 1-minute delay from the scheduled time
 - If email sending fails, the content won't be marked as sent, so it'll retry on the next cycle
-- The Procfile and system.properties are for deployment (Render). I have deployed on render as heroku's free tier is 
+- The Procfile and system.properties are for deployment (Render). I have deployed on render as heroku's free tier is no more supporting free online server and deployment.
+- I have used CursorAI for some parts of documentation and JPA postgres logic.
 
 That's about it. If you run into issues, check the logs - they're pretty verbose and should help debug most problems.
 
