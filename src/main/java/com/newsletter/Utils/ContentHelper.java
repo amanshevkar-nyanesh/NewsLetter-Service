@@ -31,6 +31,7 @@ public class ContentHelper {
             contentResponse.setResultCode(DATA_NOT_FOUND.getCode());
             contentResponse.setResultStatus(DATA_NOT_FOUND.getStatus());
             contentResponse.setResultMessage(DATA_NOT_FOUND.getMessage());
+            return contentResponse;
         }
         contentResponse = getSuccessResultCode(contentResponse);
         contentResponse.setData(contents);

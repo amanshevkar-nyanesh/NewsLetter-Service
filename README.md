@@ -130,18 +130,23 @@ I deployed this on Render because they have a free tier. Here's how:
 4. Link the database to your web service (Render sets DATABASE_URL automatically)
 
 5. Add environment variables in Render dashboard:
-   - MAIL_HOST=smtp.sendgrid.net
-   - MAIL_PORT=587
-   - MAIL_USERNAME=apikey
-   - MAIL_PASSWORD=your-sendgrid-api-key
-   - EMAIL_FROM_ADDRESS=your-verified-email@example.com
-   - EMAIL_FROM_NAME=Newsletter Service
+   
+   Go to your Web Service → Environment tab → Add the following variables:
+   
+   | Variable | Value | Example |
+   |----------|-------|---------|
+   | `MAIL_HOST` | `smtp.sendgrid.net` | smtp.sendgrid.net |
+   | `MAIL_PORT` | `587` | 587 |
+   | `MAIL_USERNAME` | `apikey` | apikey |
+   | `MAIL_PASSWORD` | Your SendGrid API key | SG.xxxxx... |
+   | `EMAIL_FROM_ADDRESS` | Your verified email | your-email@example.com |
+   | `EMAIL_FROM_NAME` | Sender name | Newsletter Service |
 
    **SendGrid Setup:**
    - Sign up at https://sendgrid.com (free tier: 100 emails/day)
-   - Create API key in Settings → API Keys
-   - Verify a sender email in Settings → Sender Authentication
-   - Use the verified email as EMAIL_FROM_ADDRESS
+   - Create API key: Settings → API Keys → Create API Key
+   - Verify sender email: Settings → Sender Authentication → Single Sender Verification
+   - Use the verified email as `EMAIL_FROM_ADDRESS`
 
 6. Deploy and wait for it to build
 
@@ -163,26 +168,6 @@ I deployed this on Render because they have a free tier. Here's how:
 - **Subscribers**: id, email, name, isActive, createdAt, and a many-to-many relationship with topics
 - **Contents**: id, title, text, topicId, scheduledTime, isSent, createdAt
 
-## Common Issues
-
-**Emails not sending? (Connection timeout errors)**
-- **Render Free Tier Issue**: Render's free tier often blocks outbound SMTP connections on port 587
-- **Solution 1**: Use SendGrid - designed for cloud deployments
-  - Sign up at https://sendgrid.com (free tier: 100 emails/day)
-  - Create API key in Settings → API Keys
-  - Verify a sender email in Settings → Sender Authentication
-  - Set environment variables: `MAIL_HOST=smtp.sendgrid.net`, `MAIL_USERNAME=apikey`, `MAIL_PASSWORD=your-api-key`, `EMAIL_FROM_ADDRESS=your-verified-email@example.com`
-- **Solution 2**: If SendGrid doesn't work, try Mailgun (free tier: 5,000 emails/month)
-  - Sign up at https://mailgun.com
-  - Get SMTP credentials from dashboard and verify sender email
-  - Set: `MAIL_HOST=smtp.mailgun.org`, `MAIL_USERNAME=your-username`, `MAIL_PASSWORD=your-password`, `EMAIL_FROM_ADDRESS=your-verified-email@example.com`
-- **Solution 3**: Upgrade Render to a paid plan that allows outbound SMTP
-- Check the application logs for specific error messages
-
-**Scheduled emails not going out?**
-- Make sure the scheduledTime is in the past or current time (the scheduler checks every minute)
-- Verify there are active subscribers subscribed to the topic
-- Check that content.isSent is false
 
 ## Project Structure
 

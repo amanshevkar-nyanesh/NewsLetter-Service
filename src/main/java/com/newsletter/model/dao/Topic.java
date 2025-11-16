@@ -1,5 +1,6 @@
 package com.newsletter.model.dao;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,6 +34,7 @@ public class Topic {
 
     @ManyToMany(mappedBy = "subscribedTopics", fetch = FetchType.LAZY)
     @JsonIgnoreProperties("subscribedTopics")
+    @JsonIgnore
     private Set<Subscriber> subscribers = new HashSet<>();
 
     @Column(nullable = false)
