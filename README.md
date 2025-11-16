@@ -23,8 +23,9 @@ A simple newsletter service built with Spring Boot. We can manage subscribers, c
 
 ## API Endpoints
 
-Base URL: `http://localhost:8080/api/v1`
+Base URL: `http://localhost:8080/api/v1` 
 
+Render Base URL:  `https://newsletter-service-w8n2.onrender.com/api/v1` 
 ### Topics
 
 **Create topic:**
@@ -52,8 +53,8 @@ POST /api/v1/subscribers
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "email": "john@example.com"
+  "name": "Aman Shevkar",
+  "email": "aman@example.com"
 }
 ```
 
@@ -102,6 +103,59 @@ The `scheduledTime` should be in ISO format (YYYY-MM-DDTHH:mm:ss). The scheduler
 6. When the scheduled time arrives, it sends emails to all active subscribers of that topic
 
 The scheduler is in `NewsletterSchedulerService` - it runs every 60 seconds and looks for content where `scheduledTime <= now` and `isSent = false`.
+
+## Quick Start: Adding a New Subscriber and Sending Them a Newsletter
+
+Here's a simple walkthrough of how to get a new subscriber set up and send them content:
+
+**Step 1: Check existing topics (optional but recommended)**
+```
+GET /api/v1/topics
+```
+This shows you all the topics you already have. If you see a topic you want to use, note its ID and skip to Step 2. If not, create a new one.
+
+**Step 2: Create a topic (if you don't have one yet)**
+```
+POST /api/v1/topics
+{
+  "name": "Technology",
+  "description": "Latest tech news and updates"
+}
+```
+You'll get back a topic ID (let's say it's `1`). Keep this ID handy - you'll need it later.
+
+**Step 3: Add the subscriber**
+```
+POST /api/v1/subscribers
+{
+  "name": "Aman Shevkar",
+  "email": "aman@example.com"
+}
+```
+This creates the subscriber and gives you their ID (let's say it's `5`).
+
+**Step 4: Subscribe them to the topic**
+```
+POST /api/v1/subscribers/5/subscribe/1
+```
+Now Aman is subscribed to the Technology topic.
+
+**Step 5: Create content and schedule it**
+```
+POST /api/v1/contents
+{
+  "title": "Weekly Tech Roundup",
+  "text": "Here's what happened in tech this week...",
+  "topicId": 1,
+  "scheduledTime": "2024-12-20T10:00:00"
+}
+```
+Set `scheduledTime` to a time in the past or current time if you want it sent immediately. The scheduler checks every minute, so it'll go out within 60 seconds.
+
+**Step 6: Wait for the email**
+The scheduler will pick up the content and send it to all active subscribers of that topic (including Aman). You can check the logs to see when it's sent.
+
+That's it! The subscriber will receive the newsletter at the scheduled time. If you want to send them more content later, just create new content for that topic and they'll automatically get it.
 
 ## Testing
 
@@ -188,7 +242,7 @@ src/main/java/com/newsletter/
 
 - The scheduler runs every 60 seconds, so there might be up to a 1-minute delay from the scheduled time
 - If email sending fails, the content won't be marked as sent, so it'll retry on the next cycle
-- The Procfile and system.properties are for deployment (Render)
+- The Procfile and system.properties are for deployment (Render). I have deployed on render as heroku's free tier is 
 
 That's about it. If you run into issues, check the logs - they're pretty verbose and should help debug most problems.
 
@@ -221,3 +275,4 @@ This was built as a minimal viable implementation to demonstrate core functional
 - Set up monitoring (Prometheus/Grafana)
 - Add API gateway for centralized routing
 - Implement database read replicas for better read performance
+
