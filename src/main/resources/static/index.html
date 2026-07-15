@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter Service API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 { color: #333; }
+        .endpoint { margin: 10px 0; padding: 10px; background: #f4f4f4; border-left: 3px solid #007bff; }
+        .method { font-weight: bold; color: #007bff; }
+        code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; }
+    </style>
+</head>
+<body>
+    <h1>📬 Newsletter Service API</h1>
+    <p>Welcome to the Newsletter Service REST API</p>
+    
+    <h2>Base URL</h2>
+    <p><code>http://localhost:8080/api/v1</code></p>
+    
+    <h2>API Endpoints</h2>
+    
+    <div class="endpoint">
+        <span class="method">GET</span> <code>/api/v1/topics</code> - Get all topics
+    </div>
+    <div class="endpoint">
+        <span class="method">POST</span> <code>/api/v1/topics</code> - Create a topic
+    </div>
+    <div class="endpoint">
+        <span class="method">GET</span> <code>/api/v1/topics/{id}</code> - Get topic by ID
+    </div>
+    
+    <div class="endpoint">
+        <span class="method">GET</span> <code>/api/v1/subscribers</code> - Get all subscribers
+    </div>
+    <div class="endpoint">
+        <span class="method">POST</span> <code>/api/v1/subscribers</code> - Create a subscriber
+    </div>
+    <div class="endpoint">
+        <span class="method">POST</span> <code>/api/v1/subscribers/{id}/subscribe/{topicId}</code> - Subscribe to topic
+    </div>
+    
+    <div class="endpoint">
+        <span class="method">GET</span> <code>/api/v1/contents</code> - Get all contents
+    </div>
+    <div class="endpoint">
+        <span class="method">POST</span> <code>/api/v1/contents</code> - Create content
+    </div>
+    <div class="endpoint">
+        <span class="method">GET</span> <code>/api/v1/contents/topic/{topicId}</code> - Get contents by topic
+    </div>
+    
+    <h2>Health Check</h2>
+    <div class="endpoint">
+        <span class="method">GET</span> <code>/actuator/health</code> - Application health status
+    </div>
+    
+    <h2>Documentation</h2>
+    <p>For complete API documentation, see the <code>README.md</code> file or use the Postman collection.</p>
+</body>
+</html>
+
+

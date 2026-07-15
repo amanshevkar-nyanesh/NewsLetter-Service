@@ -1,0 +1,592 @@
+{
+	"info": {
+		"name": "Newsletter Service API",
+		"description": "Complete API collection for Newsletter Service with 4 topics, 3 subscribers, and 10 contents",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080/api/v1",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Topics",
+			"item": [
+				{
+					"name": "Create Topic - Technology",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Technology\",\n  \"description\": \"Latest technology news, gadgets, and innovations\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/topics",
+							"host": ["{{base_url}}"],
+							"path": ["topics"]
+						}
+					}
+				},
+				{
+					"name": "Create Topic - Health & Wellness",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Health & Wellness\",\n  \"description\": \"Health tips, fitness advice, and wellness updates\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/topics",
+							"host": ["{{base_url}}"],
+							"path": ["topics"]
+						}
+					}
+				},
+				{
+					"name": "Create Topic - Business",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Business\",\n  \"description\": \"Business news, market updates, and entrepreneurship\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/topics",
+							"host": ["{{base_url}}"],
+							"path": ["topics"]
+						}
+					}
+				},
+				{
+					"name": "Create Topic - Entertainment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Entertainment\",\n  \"description\": \"Movies, music, TV shows, and celebrity news\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/topics",
+							"host": ["{{base_url}}"],
+							"path": ["topics"]
+						}
+					}
+				},
+				{
+					"name": "Get All Topics",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/topics",
+							"host": ["{{base_url}}"],
+							"path": ["topics"]
+						}
+					}
+				},
+				{
+					"name": "Get Topic by ID",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/topics/1",
+							"host": ["{{base_url}}"],
+							"path": ["topics", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Topic",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{base_url}}/topics/1",
+							"host": ["{{base_url}}"],
+							"path": ["topics", "1"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Subscribers",
+			"item": [
+				{
+					"name": "Create Subscriber - Sayali Shevkar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"sayali shevkar\",\n  \"email\": \"sayalishevkar@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/subscribers",
+							"host": ["{{base_url}}"],
+							"path": ["subscribers"]
+						}
+					}
+				},
+				{
+					"name": "Create Subscriber - Prasanna Kulkarni",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Prasanna kulkarni\",\n  \"email\": \"prasannakulkarni221@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/subscribers",
+							"host": ["{{base_url}}"],
+							"path": ["subscribers"]
+						}
+					}
+				},
+				{
+					"name": "Create Subscriber - Sangeeta Shevkar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"sangeeta shevkar\",\n  \"email\": \"sangeetashevkar01@gmail.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/subscribers",
+							"host": ["{{base_url}}"],
+							"path": ["subscribers"]
+						}
+					}
+				},
+				{
+					"name": "Get All Subscribers",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/subscribers",
+							"host": ["{{base_url}}"],
+							"path": ["subscribers"]
+						}
+					}
+				},
+				{
+					"name": "Get Subscriber by ID",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/subscribers/1",
+							"host": ["{{base_url}}"],
+							"path": ["subscribers", "1"]
+						}
+					}
+				},
+				{
+					"name": "Subscribe to Topic",
+					"request": {
+						"method": "POST",
+						"url": {
+							"raw": "{{base_url}}/subscribers/1/subscribe/1",
+							"host": ["{{base_url}}"],
+							"path": ["subscribers", "1", "subscribe", "1"]
+						}
+					}
+				},
+				{
+					"name": "Unsubscribe from Topic",
+					"request": {
+						"method": "POST",
+						"url": {
+							"raw": "{{base_url}}/subscribers/1/unsubscribe/1",
+							"host": ["{{base_url}}"],
+							"path": ["subscribers", "1", "unsubscribe", "1"]
+						}
+					}
+				},
+				{
+					"name": "Deactivate Subscriber",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{base_url}}/subscribers/1/deactivate",
+							"host": ["{{base_url}}"],
+							"path": ["subscribers", "1", "deactivate"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Subscriptions",
+			"item": [
+				{
+					"name": "Sayali (1) -> Technology (1)",
+					"request": {
+						"method": "POST",
+						"url": {
+							"raw": "{{base_url}}/subscribers/1/subscribe/1",
+							"host": ["{{base_url}}"],
+							"path": ["subscribers", "1", "subscribe", "1"]
+						}
+					}
+				},
+				{
+					"name": "Sayali (1) -> Business (3)",
+					"request": {
+						"method": "POST",
+						"url": {
+							"raw": "{{base_url}}/subscribers/1/subscribe/3",
+							"host": ["{{base_url}}"],
+							"path": ["subscribers", "1", "subscribe", "3"]
+						}
+					}
+				},
+				{
+					"name": "Prasanna (2) -> Technology (1)",
+					"request": {
+						"method": "POST",
+						"url": {
+							"raw": "{{base_url}}/subscribers/2/subscribe/1",
+							"host": ["{{base_url}}"],
+							"path": ["subscribers", "2", "subscribe", "1"]
+						}
+					}
+				},
+				{
+					"name": "Prasanna (2) -> Health (2)",
+					"request": {
+						"method": "POST",
+						"url": {
+							"raw": "{{base_url}}/subscribers/2/subscribe/2",
+							"host": ["{{base_url}}"],
+							"path": ["subscribers", "2", "subscribe", "2"]
+						}
+					}
+				},
+				{
+					"name": "Sangeeta (3) -> Business (3)",
+					"request": {
+						"method": "POST",
+						"url": {
+							"raw": "{{base_url}}/subscribers/3/subscribe/3",
+							"host": ["{{base_url}}"],
+							"path": ["subscribers", "3", "subscribe", "3"]
+						}
+					}
+				},
+				{
+					"name": "Sangeeta (3) -> Entertainment (4)",
+					"request": {
+						"method": "POST",
+						"url": {
+							"raw": "{{base_url}}/subscribers/3/subscribe/4",
+							"host": ["{{base_url}}"],
+							"path": ["subscribers", "3", "subscribe", "4"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Contents",
+			"item": [
+				{
+					"name": "Create Content 1 - Technology AI",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"AI Breakthrough: New Language Model Released\",\n  \"text\": \"Scientists have announced a groundbreaking new AI language model that can understand and generate human-like text with unprecedented accuracy. This model represents a significant leap forward in artificial intelligence research and has potential applications in education, healthcare, and creative industries.\",\n  \"topicId\": 1,\n  \"scheduledTime\": \"2024-12-20T10:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/contents",
+							"host": ["{{base_url}}"],
+							"path": ["contents"]
+						}
+					}
+				},
+				{
+					"name": "Create Content 2 - Technology Smartphone",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"New Flagship Smartphone Launched\",\n  \"text\": \"The latest flagship smartphone has been unveiled with cutting-edge features including a 200MP camera, 5G connectivity, and an all-day battery life. Pre-orders start next week with exclusive launch offers for early adopters.\",\n  \"topicId\": 1,\n  \"scheduledTime\": \"2024-12-20T11:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/contents",
+							"host": ["{{base_url}}"],
+							"path": ["contents"]
+						}
+					}
+				},
+				{
+					"name": "Create Content 3 - Health Morning Routine",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"5 Morning Habits for Better Health\",\n  \"text\": \"Start your day right with these five simple morning habits: 1) Drink a glass of water, 2) Get 10 minutes of sunlight, 3) Practice 5 minutes of meditation, 4) Eat a protein-rich breakfast, 5) Take a 10-minute walk. These habits can significantly improve your energy levels and overall well-being.\",\n  \"topicId\": 2,\n  \"scheduledTime\": \"2024-12-20T12:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/contents",
+							"host": ["{{base_url}}"],
+							"path": ["contents"]
+						}
+					}
+				},
+				{
+					"name": "Create Content 4 - Health Exercise",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Best Exercises for Home Workouts\",\n  \"text\": \"You don't need a gym membership to stay fit! Here are effective home workout exercises: push-ups, squats, planks, jumping jacks, and burpees. Aim for 3-4 sets of 10-15 repetitions each. Remember to warm up before and cool down after your workout.\",\n  \"topicId\": 2,\n  \"scheduledTime\": \"2024-12-20T13:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/contents",
+							"host": ["{{base_url}}"],
+							"path": ["contents"]
+						}
+					}
+				},
+				{
+					"name": "Create Content 5 - Business Market",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Weekly Market Update: Tech Stocks Surge\",\n  \"text\": \"Technology stocks have seen a significant surge this week, with major tech companies reporting strong quarterly earnings. The market is showing positive signs of recovery, with investors showing renewed confidence in the tech sector. Analysts predict continued growth in the coming months.\",\n  \"topicId\": 3,\n  \"scheduledTime\": \"2024-12-20T14:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/contents",
+							"host": ["{{base_url}}"],
+							"path": ["contents"]
+						}
+					}
+				},
+				{
+					"name": "Create Content 6 - Business Funding",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Startup Raises $50M in Series B Funding\",\n  \"text\": \"A promising fintech startup has successfully raised $50 million in Series B funding, led by prominent venture capital firms. The company plans to use the funds to expand its operations globally and develop new innovative financial products. This marks one of the largest funding rounds in the sector this year.\",\n  \"topicId\": 3,\n  \"scheduledTime\": \"2024-12-20T15:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/contents",
+							"host": ["{{base_url}}"],
+							"path": ["contents"]
+						}
+					}
+				},
+				{
+					"name": "Create Content 7 - Entertainment Movie",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Blockbuster Movie Breaks Box Office Records\",\n  \"text\": \"The latest action-packed blockbuster has shattered box office records, earning over $100 million in its opening weekend. Critics are praising the film's stunning visual effects, compelling storyline, and outstanding performances. Fans are already calling for a sequel.\",\n  \"topicId\": 4,\n  \"scheduledTime\": \"2024-12-20T16:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/contents",
+							"host": ["{{base_url}}"],
+							"path": ["contents"]
+						}
+					}
+				},
+				{
+					"name": "Create Content 8 - Entertainment Music",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Top Artist Releases New Album\",\n  \"text\": \"The world's top-charting artist has just released their highly anticipated new album, featuring collaborations with several A-list musicians. The album has already topped streaming charts worldwide, with fans praising its innovative sound and meaningful lyrics. Exclusive behind-the-scenes content is available on the artist's official website.\",\n  \"topicId\": 4,\n  \"scheduledTime\": \"2024-12-20T17:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/contents",
+							"host": ["{{base_url}}"],
+							"path": ["contents"]
+						}
+					}
+				},
+				{
+					"name": "Create Content 9 - Technology Security",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Important Cybersecurity Update\",\n  \"text\": \"Security experts are warning about a new type of phishing attack targeting email users. Always verify sender identities, never click suspicious links, and enable two-factor authentication on all your accounts. Stay safe online by keeping your software updated and using strong, unique passwords.\",\n  \"topicId\": 1,\n  \"scheduledTime\": \"2024-12-20T18:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/contents",
+							"host": ["{{base_url}}"],
+							"path": ["contents"]
+						}
+					}
+				},
+				{
+					"name": "Create Content 10 - Business Forecast",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Economic Forecast for Next Quarter\",\n  \"text\": \"Leading economists predict steady economic growth for the next quarter, with inflation expected to stabilize. Key sectors showing strong performance include technology, healthcare, and renewable energy. Businesses are advised to focus on innovation and digital transformation to stay competitive in the evolving market landscape.\",\n  \"topicId\": 3,\n  \"scheduledTime\": \"2024-12-20T19:00:00\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/contents",
+							"host": ["{{base_url}}"],
+							"path": ["contents"]
+						}
+					}
+				},
+				{
+					"name": "Get All Contents",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/contents",
+							"host": ["{{base_url}}"],
+							"path": ["contents"]
+						}
+					}
+				},
+				{
+					"name": "Get Content by ID",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/contents/1",
+							"host": ["{{base_url}}"],
+							"path": ["contents", "1"]
+						}
+					}
+				},
+				{
+					"name": "Get Contents by Topic",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "{{base_url}}/contents/topic/1",
+							"host": ["{{base_url}}"],
+							"path": ["contents", "topic", "1"]
+						}
+					}
+				},
+				{
+					"name": "Delete Content",
+					"request": {
+						"method": "DELETE",
+						"url": {
+							"raw": "{{base_url}}/contents/1",
+							"host": ["{{base_url}}"],
+							"path": ["contents", "1"]
+						}
+					}
+				}
+			]
+		}
+	]
+}
+
